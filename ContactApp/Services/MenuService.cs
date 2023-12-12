@@ -1,12 +1,16 @@
-﻿using ContactApp.Interfaces;
+﻿using AdressBook.Shared.Interfaces;
+using AdressBook.Shared.Models;
+using AdressBook.Shared.Services;
+using ContactApp.Interfaces;
 
 namespace ContactApp.Services;
 
 
 
 public class MenuService : IMenuService
-
 {
+    private readonly IContactService _contactService = new ContactService();
+
     public void ShowMainMenu()
     {
         while (true)
@@ -55,12 +59,41 @@ public class MenuService : IMenuService
 
     private void ShowAddContact()
     {
-        throw new NotImplementedException();
+        IContact contact = new Contact();
+
+        Console.WriteLine("Lägg till en ny kontakt, var god ange: ");
+        Console.Write("Förnamn: ");
+        contact.FirstName = Console.ReadLine()!;
+
+        Console.Write("Efternamn: ");
+        contact.LastName = Console.ReadLine()!;
+
+        Console.Write("E-post: ");
+        contact.Email = Console.ReadLine()!;
+
+        Console.Write("Telefonnummer: ");
+        contact.Phone = Console.ReadLine()!;
+
+        Console.Write("Gatuadress: ");
+        contact.Address = Console.ReadLine()!;
+
+        Console.Write("Postnummer: ");
+        contact.PostalCode = Console.ReadLine()!;
+
+        Console.Write("Stad: ");
+        contact.City = Console.ReadLine()!;
+
+        _contactService.AddContactToList(contact);
     }
 
     private void ShowAllContacts()
     {
-        throw new NotImplementedException();
+        var contacts = _contactService.GetContactsFromList();
+
+        foreach (var contact in contacts)
+        {
+            Console.WriteLine($"{contact.FirstName} {contact.LastName} {contact.Email}");
+        }
     }
 
     private void ShowDetailedContact()

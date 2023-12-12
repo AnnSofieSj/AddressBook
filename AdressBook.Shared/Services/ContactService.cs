@@ -9,7 +9,7 @@ public class ContactService : IContactService
 {
     private readonly IFileService _fileService = new FileService();
     private List<IContact> _contacts = [];
-    private readonly string _filePath = @"C:\ECEducation\csharp-projects\AddressBook.json";
+    private readonly string _filePath = @"C:\eceducation\csharp-projects\addressbook\lista.json";
 
 
 
@@ -21,7 +21,7 @@ public class ContactService : IContactService
             { 
                 _contacts.Add(contact);
 
-                string json = JsonConvert.SerializeObject(contact, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All});
+                string json = JsonConvert.SerializeObject(_contacts, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All});
 
                 var result = _fileService.SaveContentToFile(_filePath, json);
                 return result;
