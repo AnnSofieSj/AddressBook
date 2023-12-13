@@ -9,7 +9,7 @@ namespace ContactApp.Services;
 
 public class MenuService : IMenuService
 {
-    private readonly IContactService _contactService = new ContactService();
+    private readonly IContactService _contactService = new ContactService(@"C:\eceducation\csharp-projects\addressbook\list.json");
 
     public void ShowMainMenu()
     {
@@ -98,7 +98,20 @@ public class MenuService : IMenuService
 
     private void ShowDetailedContact()
     {
-        throw new NotImplementedException();
+        Console.Clear();
+        Console.WriteLine("*** Ange e-postadressen för den kontakt som du vill visa ***");
+        Console.Write("E-postadress: ");
+        var contact = _contactService.GetContactFromList(Console.ReadLine()!);
+        Console.WriteLine();
+        Console.WriteLine("__________________________________________________");
+        Console.WriteLine();
+        Console.WriteLine("Namn och adress: ");
+        Console.WriteLine($"{contact.FirstName} {contact.LastName}");       
+        Console.WriteLine($"{contact.Address}");
+        Console.WriteLine($"{contact.PostalCode} {contact.City}");
+        Console.WriteLine();
+        Console.WriteLine($"E-Postadress: {contact.Email}");
+        Console.WriteLine($"Telefonnummer: {contact.Phone}");
     }       
 
     private void ShowRemoveContact()
@@ -108,7 +121,19 @@ public class MenuService : IMenuService
 
     private void ShowExitApp()
     {
-        throw new NotImplementedException();
+        Console.Clear();
+        Console.Write("Är du säker på att du vill avsluta programmet? (y/n): ");
+        var option = Console.ReadLine() ?? "";
+
+        if (option.Equals("y", StringComparison.CurrentCultureIgnoreCase))
+        {
+            Environment.Exit(0);
+
+        }
+        else
+        {
+            ShowMainMenu();
+        }
     }
 
     private void MenuTitle(string title)

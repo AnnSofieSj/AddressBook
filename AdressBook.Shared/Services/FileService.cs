@@ -11,7 +11,8 @@ public class FileService : IFileService
        {
             if (File.Exists(filePath)) 
             { 
-                return File.ReadAllText(filePath);
+                using var sr = new StreamReader(filePath);
+                return sr.ReadToEnd();
             }
        }
         catch (Exception ex) { Debug.WriteLine(ex.Message); }
@@ -23,10 +24,13 @@ public class FileService : IFileService
     {
         try
         {
-            using var sw = new StreamWriter(filePath);
-            sw.WriteLine(content);
+            using (var sw = new StreamWriter(filePath))
+            {
+                sw.WriteLine(content);
+            }          
             return true;    
         }
+       
         catch (Exception ex) { Debug.WriteLine(ex.Message); }
         return false;
     }

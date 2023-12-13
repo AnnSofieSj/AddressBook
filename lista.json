@@ -1,1 +1,0 @@
-{"$type":"System.Collections.Generic.List`1[[AdressBook.Shared.Interfaces.IContact, AdressBook.Shared]], System.Private.CoreLib","$values":[{"$type":"AdressBook.Shared.Models.Contact, AdressBook.Shared","FirstName":"Ann-Sofie","LastName":"Sjölander","Email":"asdas@asfas.com","Phone":"070-3333333","Address":"alkmlaksm","PostalCode":"12345","City":"aksnklanlk"}]}
