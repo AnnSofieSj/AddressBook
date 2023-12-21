@@ -14,13 +14,21 @@ public interface IContactService
     /// <summary>
     /// Get all contacts from list
     /// </summary>
-    /// <returns></returns>
+    /// <returns>Returns all contacts in list or null! if it fails </returns>
     IEnumerable<IContact> GetContactsFromList();
 
     /// <summary>
     /// Get one contact from list
     /// </summary>
+    /// <param name="email">Enter emailadress to get detailed information about contact</param>
+    /// <returns>Returns detailed information about contact if successfull or null! if it fails or contact dont exists</returns>
+    IContact GetContactFromList(string email);
+
+    /// <summary>
+    /// Removes a contact from list (--------- Rätt sätt???------)
+    /// </summary>
+    /// <param name="contact"></param>
     /// <param name="email"></param>
     /// <returns></returns>
-    IContact GetContactFromList(string email);
+    bool RemoveContactFromList(string email);
 }

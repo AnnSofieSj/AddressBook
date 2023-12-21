@@ -1,15 +1,14 @@
 ﻿using AdressBook.Shared.Interfaces;
 using AdressBook.Shared.Models;
-using AdressBook.Shared.Services;
 using ContactApp.Interfaces;
 
 namespace ContactApp.Services;
 
 
 
-public class MenuService : IMenuService
+public class MenuService(IContactService contactService) : IMenuService
 {
-    private readonly IContactService _contactService = new ContactService(@"C:\eceducation\csharp-projects\addressbook\list.json");
+    private readonly IContactService _contactService = contactService;
 
     public void ShowMainMenu()
     {
@@ -116,7 +115,11 @@ public class MenuService : IMenuService
 
     private void ShowRemoveContact()
     {
-        throw new NotImplementedException();
+        Console.WriteLine("*** Ange e-postadressen för den kontakt som du vill visa ***");
+        Console.Write("E-postadress: ");
+        var contact = _contactService.RemoveContactFromList(Console.ReadLine()!);
+        Console.WriteLine("Kontakt borttagen, tryck på valfri tangent för att återgå till huvudmenyn");
+        Console.ReadKey();  
     }
 
     private void ShowExitApp()
