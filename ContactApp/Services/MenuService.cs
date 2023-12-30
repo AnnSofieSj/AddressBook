@@ -60,14 +60,19 @@ public class MenuService(IContactService contactService) : IMenuService
     {
         IContact contact = new Contact();
 
-        Console.WriteLine("Lägg till en ny kontakt, var god ange: ");
+        Console.Clear();
+        Console.WriteLine(" *** Skapa ny kontakt ***");
+        Console.WriteLine();
+        Console.WriteLine("Var god ange: ");
         Console.Write("Förnamn: ");
         contact.FirstName = Console.ReadLine()!;
+        contact.FirstName = char.ToUpper(contact.FirstName[0]) + contact.FirstName.Substring(1);
 
         Console.Write("Efternamn: ");
         contact.LastName = Console.ReadLine()!;
+        contact.LastName = char.ToUpper(contact.LastName[0]) + contact.LastName.Substring(1);
 
-        Console.Write("E-post: ");
+        Console.Write("E-postadress: ");
         contact.Email = Console.ReadLine()!;
 
         Console.Write("Telefonnummer: ");
@@ -75,51 +80,84 @@ public class MenuService(IContactService contactService) : IMenuService
 
         Console.Write("Gatuadress: ");
         contact.Address = Console.ReadLine()!;
+        contact.Address = char.ToUpper(contact.Address[0]) + contact.Address.Substring(1);
 
         Console.Write("Postnummer: ");
         contact.PostalCode = Console.ReadLine()!;
 
         Console.Write("Stad: ");
         contact.City = Console.ReadLine()!;
+        contact.City = char.ToUpper(contact.City[0]) + contact.City.Substring(1);
 
         _contactService.AddContactToList(contact);
+
+        Console.WriteLine();
+        Console.WriteLine();
+        Console.WriteLine("Kontakt skapad. Tryck Enter för att komma tillbaks till huvudmenyn.");
     }
 
     private void ShowAllContacts()
     {
         var contacts = _contactService.GetContactsFromList();
 
+        Console.Clear();
+        Console.WriteLine();
+        Console.WriteLine(" *** Alla kontakter *** ");
         foreach (var contact in contacts)
         {
-            Console.WriteLine($"{contact.FirstName} {contact.LastName} {contact.Email}");
+            Console.WriteLine();
+            Console.WriteLine($" * {contact.FirstName} {contact.LastName} {contact.Email}");
         }
+        Console.WriteLine();
+        Console.WriteLine();
+        Console.WriteLine("Tryck Enter för att komma tillbaks till huvudmenyn.");
     }
 
     private void ShowDetailedContact()
     {
         Console.Clear();
-        Console.WriteLine("*** Ange e-postadressen för den kontakt som du vill visa ***");
+        Console.WriteLine(" *** Ange e-postadressen för den kontakt som du vill visa *** ");
         Console.Write("E-postadress: ");
         var contact = _contactService.GetContactFromList(Console.ReadLine()!);
+        Console.Clear();
         Console.WriteLine();
-        Console.WriteLine("__________________________________________________");
-        Console.WriteLine();
-        Console.WriteLine("Namn och adress: ");
+        Console.WriteLine(" *** Information om kontakt *** ");
+        Console.WriteLine();        
         Console.WriteLine($"{contact.FirstName} {contact.LastName}");       
         Console.WriteLine($"{contact.Address}");
         Console.WriteLine($"{contact.PostalCode} {contact.City}");
         Console.WriteLine();
         Console.WriteLine($"E-Postadress: {contact.Email}");
         Console.WriteLine($"Telefonnummer: {contact.Phone}");
+        Console.WriteLine();
+        Console.WriteLine();
+        Console.WriteLine("Tryck Enter för att komma tillbaks till huvudmenyn.");
     }       
 
     private void ShowRemoveContact()
     {
-        Console.WriteLine("*** Ange e-postadressen för den kontakt som du vill visa ***");
+        Console.Clear();
+        Console.WriteLine("*** Ange e-postadressen för den kontakt som du vill ta bort ***");
+        Console.WriteLine();
         Console.Write("E-postadress: ");
-        var contact = _contactService.RemoveContactFromList(Console.ReadLine()!);
-        Console.WriteLine("Kontakt borttagen, tryck på valfri tangent för att återgå till huvudmenyn");
-        Console.ReadKey();  
+        var remove = Console.ReadLine();
+
+        Console.WriteLine("Är du säker på att du vill ta bort kontakten? (y/n): ");
+        var option = Console.ReadLine() ?? "";
+
+        if (option.Equals("y", StringComparison.CurrentCultureIgnoreCase))
+        {
+            var contact = _contactService.RemoveContactFromList(remove!);
+        }
+        else
+        {
+            ShowMainMenu();
+        }
+
+        
+        Console.Clear();
+        Console.WriteLine("Kontakt borttagen. Tryck Enter för att komma tillbaks till huvudmenyn.");
+        
     }
 
     private void ShowExitApp()
