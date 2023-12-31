@@ -25,10 +25,9 @@ public interface IContactService
     IContact GetContactFromList(string email);
 
     /// <summary>
-    /// Removes a contact from list (--------- Rätt sätt???------)
-    /// </summary>
-    /// <param name="contact"></param>
+    /// Removes a contact from list 
+    /// </summary>   
     /// <param name="email"></param>
-    /// <returns></returns>
+    /// <returns>Returns true if successfull or false if it fails</returns>
     bool RemoveContactFromList(string email);
 }
