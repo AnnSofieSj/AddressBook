@@ -3,13 +3,5 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MobilApp.MainPage">
 
-    <Grid RowDefinitions="auto, *">
-        <VerticalStackLayout Grid.Row="0">
-            <Label Text="Lägg till ny kontakt" Margin="15,10,0,10"/>
-            <Label Text="Namn" Margin="15,0,0,0"/>
-            <Entry Margin="5,5,5,15"/>
-            <Button Text="Lägg till" Margin="10"/>
-        </VerticalStackLayout>
-        
-    </Grid>
+   
 </ContentPage>

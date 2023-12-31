@@ -13,11 +13,11 @@ public class ContactService : IContactService
     public ContactService(IFileService fileService)
     {
         _fileService = fileService;
-        _contacts = GetContactsFromList().ToList();
+        Contacts = GetContactsFromList().ToList();
     }
 
 
-    private List<IContact> _contacts = [];
+    public List<IContact> Contacts {get; private set;} = [];
     private readonly string _filePath = @"C:\eceducation\csharp-projects\addressbook\list.json";
 
   
@@ -26,11 +26,11 @@ public class ContactService : IContactService
     {
         try
         {
-            if (!_contacts.Any(x => x.Email == contact.Email))
+            if (!Contacts.Any(x => x.Email == contact.Email))
             {
-                _contacts.Add(contact);
+                Contacts.Add(contact);
 
-                string json = JsonConvert.SerializeObject(_contacts, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All });
+                string json = JsonConvert.SerializeObject(Contacts, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All });
 
                 var result = _fileService.SaveContentToFile(_filePath, json);
                 return true; //true eller result?? Testet fungerar inte med result
@@ -46,7 +46,7 @@ public class ContactService : IContactService
         try
         {
             GetContactsFromList();
-            var contact = _contacts.FirstOrDefault(x => x.Email == email);
+            var contact = Contacts.FirstOrDefault(x => x.Email == email);
             return contact ??= null!;
         }
         catch (Exception ex) { Debug.WriteLine(ex.Message); }
@@ -61,10 +61,10 @@ public class ContactService : IContactService
             var content = _fileService.GetContentFromFile(_filePath);
             if (!string.IsNullOrEmpty(content))
             {
-                _contacts = JsonConvert.DeserializeObject<List<IContact>>(content, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All })!;
-                return _contacts;
+                Contacts = JsonConvert.DeserializeObject<List<IContact>>(content, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All })!;
+                return Contacts;
             }
-            else { return _contacts; }
+            else { return Contacts; }
         }
         catch (Exception ex) { Debug.WriteLine(ex.Message); }
         return null!;
@@ -77,13 +77,13 @@ public class ContactService : IContactService
         try
         {            
             GetContactsFromList();
-            var contactRemove = _contacts.FirstOrDefault(x => x.Email == email);
+            var contactRemove = Contacts.FirstOrDefault(x => x.Email == email);
 
             if (contactRemove != null)
             {
-                _contacts.Remove(contactRemove);
+                Contacts.Remove(contactRemove);
 
-                string json = JsonConvert.SerializeObject(_contacts, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All });
+                string json = JsonConvert.SerializeObject(Contacts, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All });
 
                 var result = _fileService.SaveContentToFile(_filePath, json);
                 return result;

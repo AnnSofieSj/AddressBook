@@ -37,6 +37,6 @@ public partial class MainViewModel : ObservableObject
 
     public void UpdateContactList()
     {
-        ContactList = new ObservableCollection<Contact>();  // Här var jag sist, men ändring ska nog ske i listan i consoldelen
+        ContactList = new ObservableCollection<Contact>((IEnumerable<Contact>)_contactService.Contacts.Select(contact => contact).ToList());  // Här var jag sist....
     }
 }

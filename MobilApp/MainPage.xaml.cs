@@ -11,8 +11,8 @@ namespace MobilApp
         public MainPage(MainViewModel viewModel)
         {
             InitializeComponent();
-            BindingContext = viewModel; 
-          
+            BindingContext = viewModel;
+
         }
 
         
